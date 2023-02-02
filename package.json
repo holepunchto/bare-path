@@ -1,5 +1,5 @@
 {
-  "name": "tiny-paths",
+  "name": "@pearjs/path",
   "version": "1.0.2",
   "description": "path for platforms without path",
   "main": "index.js",
@@ -11,12 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/holepunchto/tiny-paths.git"
+    "url": "https://github.com/holepunchto/pearjs-path.git"
   },
   "author": "Mathias Buus (@mafintosh)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/holepunchto/tiny-paths/issues"
+    "url": "https://github.com/holepunchto/pearjs-path/issues"
   },
-  "homepage": "https://github.com/holepunchto/tiny-paths"
+  "homepage": "https://github.com/holepunchto/pearjs-path"
 }
