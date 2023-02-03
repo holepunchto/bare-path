@@ -21,5 +21,5 @@
   "homepage": "https://github.com/holepunchto/pearjs-path#readme",
   "devDependencies": {
     "standard": "^17.0.0"
-  },
+  }
 }
