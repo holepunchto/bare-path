@@ -1,11 +1,11 @@
 {
   "name": "@pearjs/path",
   "version": "1.0.2",
-  "description": "path for platforms without path",
+  "description": "Path manipulation library for JavaScript",
   "main": "index.js",
-  "devDependencies": {
-    "standard": "^17.0.0"
-  },
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "test": "standard"
   },
@@ -13,10 +13,13 @@
     "type": "git",
     "url": "https://github.com/holepunchto/pearjs-path.git"
   },
-  "author": "Mathias Buus (@mafintosh)",
+  "author": "Holepunch",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/holepunchto/pearjs-path/issues"
   },
-  "homepage": "https://github.com/holepunchto/pearjs-path"
+  "homepage": "https://github.com/holepunchto/pearjs-path#readme",
+  "devDependencies": {
+    "standard": "^17.0.0"
+  },
 }

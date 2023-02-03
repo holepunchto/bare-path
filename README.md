@@ -1,6 +1,6 @@
 # @pearjs/path
 
-path for platforms without path
+Path manipulation library for JavaScript.
 
 ```
 npm install @pearjs/path
