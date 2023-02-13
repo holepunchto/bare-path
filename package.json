@@ -1,6 +1,6 @@
 {
   "name": "@pearjs/path",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Path manipulation library for JavaScript",
   "main": "index.js",
   "files": [
