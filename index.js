@@ -53,9 +53,11 @@ function makePath (windows) {
   path.dirname = function dirname (p) {
     let end = p.length - 1
     while (end > 0 && p[end] === sep) end--
-    if (end <= 0) return ''
-    const start = p.lastIndexOf(sep, end)
-    if (start === -1) return ''
+    if (end === 0) end = 1
+    if (end < 0) return '.'
+    let start = p.lastIndexOf(sep, end)
+    if (start === 0) start = 1
+    if (start === -1) return '.'
     return p.slice(0, start)
   }
 
