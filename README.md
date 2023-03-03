@@ -16,4 +16,4 @@ path.join('foo', 'bar') // foo/bar on posix, foo\bar on windows
 
 ## License
 
-MIT
+Apache-2.0
