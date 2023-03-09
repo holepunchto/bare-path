@@ -66,10 +66,14 @@ function makePath (windows) {
     return i === -1 ? '' : p.slice(i)
   }
 
-  path.resolve = function resolve (a, b) {
-    if (b === undefined) return path.normalize(a)
-    if (path.isAbsolute(b)) return path.normalize(b)
-    return path.join(a, b)
+  path.resolve = function resolve (...args) {
+    let resolved = ''
+    for (let i = args.length - 1; i >= -1; i--) {
+      const part = i === -1 ? process.cwd() : args[i]
+      resolved = path.join(part, resolved)
+      if (path.isAbsolute(resolved)) break
+    }
+    return resolved
   }
 
   path.join = function join (p, ...parts) {
