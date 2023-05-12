@@ -1,15 +1,15 @@
-# @pearjs/path
+# bare-path
 
 Path manipulation library for JavaScript.
 
 ```
-npm install @pearjs/path
+npm i bare-path
 ```
 
 ## Usage
 
 ``` js
-const path = require('@pearjs/path')
+const path = require('bare-path')
 
 path.join('foo', 'bar') // foo/bar on posix, foo\bar on windows
 ```

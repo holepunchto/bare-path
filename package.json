@@ -1,5 +1,5 @@
 {
-  "name": "@pearjs/path",
+  "name": "bare-path",
   "version": "1.0.5",
   "description": "Path manipulation library for JavaScript",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/holepunchto/pearjs-path.git"
+    "url": "https://github.com/holepunchto/bare-path.git"
   },
   "author": "Holepunch",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/holepunchto/pearjs-path/issues"
+    "url": "https://github.com/holepunchto/bare-path/issues"
   },
-  "homepage": "https://github.com/holepunchto/pearjs-path#readme",
+  "homepage": "https://github.com/holepunchto/bare-path#readme",
   "devDependencies": {
     "standard": "^17.0.0"
   }
