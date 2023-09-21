@@ -1,28 +1,29 @@
 const posix = makePath(false)
 const win32 = makePath(true)
 
-posix.win32 = win32
-win32.posix = posix
+posix.win32 = win32.win32 = win32
+posix.posix = win32.posix = posix
 
 module.exports = process.platform === 'win32' ? win32 : posix
 
 function makePath (windows) {
   const path = {}
 
-  path.posix = path
-  path.win32 = path
-
   const sep = path.sep = windows ? '\\' : '/'
 
-  if (windows) {
-    path.isAbsolute = function isAbsolute (p) {
+  path.isAbsolute = windows
+    ? function isAbsolute (p) {
       if (p.length === 0) return false
       return (p[0] === '\\' || p[0] === '/') ||
         (p.length === 2 && p[1] === ':') ||
         (p.length > 2 && p[1] === ':' && (p[2] === '\\' || p[2] === '/'))
     }
+    : function isAbsolute (p) {
+      return p.length > 0 && p[0] === '/'
+    }
 
-    path.root = function root (p) {
+  path.root = windows
+    ? function root (p) {
       if (p.length === 0) return ''
 
       return (p[0] === '\\' || p[0] === '/')
@@ -33,15 +34,32 @@ function makePath (windows) {
                 ? p.slice(0, 3)
                 : ''
     }
-  } else {
-    path.isAbsolute = function isAbsolute (p) {
-      return p.length > 0 && p[0] === '/'
-    }
-
-    path.root = function root (p) {
+    : function root (p) {
       return path.isAbsolute(p) ? '/' : ''
     }
-  }
+
+  path.toNamespacedPath = windows
+    ? function toNamespacedPath (p) {
+      if (p.length === 0) return ''
+
+      const r = path.resolve(p)
+      if (r.length <= 2) return p
+
+      if (r[0] === '\\') {
+        if (r[1] === '\\') {
+          if (r[2] !== '?' && r[2] !== '.') {
+            return '\\\\?\\UNC\\' + r.slice(2)
+          }
+        }
+      } else if (r[1] === ':' && (r[2] === '\\' || r[2] === '/')) {
+        return '\\\\?\\' + r
+      }
+
+      return p
+    }
+    : function toNamespacedPath (p) {
+      return p
+    }
 
   path.basename = function basename (p) {
     let end = p.length - 1
