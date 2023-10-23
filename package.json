@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/holepunchto/bare-path#readme",
   "devDependencies": {
+    "brittle": "^3.3.2",
     "standard": "^17.0.0"
   }
 }

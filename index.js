@@ -107,6 +107,7 @@ function makePath (windows) {
 
     const root = path.root(p)
     const isAbsolute = root !== ''
+    const hasTrailingSep = p[p.length - 1] === sep
 
     let i = root.length
     let out = ''
@@ -142,6 +143,7 @@ function makePath (windows) {
     }
 
     if (root) out = root + out
+    if (hasTrailingSep) out += sep
 
     return out || '.'
   }
