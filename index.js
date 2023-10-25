@@ -88,6 +88,7 @@ function makePath (windows) {
     let resolved = ''
     for (let i = args.length - 1; i >= -1; i--) {
       const part = i === -1 ? process.cwd() : args[i]
+      if (part.length === 0) continue
       resolved = path.join(part, resolved)
       if (path.isAbsolute(resolved)) break
     }
@@ -95,7 +96,10 @@ function makePath (windows) {
   }
 
   path.join = function join (p, ...parts) {
-    for (const part of parts) p += sep + part
+    for (const part of parts) {
+      if (part.length === 0) continue
+      p += sep + part
+    }
     return path.normalize(p)
   }
 
