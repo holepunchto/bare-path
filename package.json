@@ -19,6 +19,9 @@
     "url": "https://github.com/holepunchto/bare-path/issues"
   },
   "homepage": "https://github.com/holepunchto/bare-path#readme",
+  "dependencies": {
+    "bare-os": "^2.0.0"
+  },
   "devDependencies": {
     "brittle": "^3.3.2",
     "standard": "^17.0.0"

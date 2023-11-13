@@ -1,10 +1,12 @@
+const os = require('bare-os')
+
 const posix = makePath(false)
 const win32 = makePath(true)
 
 posix.win32 = win32.win32 = win32
 posix.posix = win32.posix = posix
 
-module.exports = process.platform === 'win32' ? win32 : posix
+module.exports = os.platform() === 'win32' ? win32 : posix
 
 function makePath (windows) {
   const path = {}
@@ -87,7 +89,7 @@ function makePath (windows) {
   path.resolve = function resolve (...args) {
     let resolved = ''
     for (let i = args.length - 1; i >= -1; i--) {
-      const part = i === -1 ? process.cwd() : args[i]
+      const part = i === -1 ? os.cwd() : args[i]
       if (part.length === 0) continue
       resolved = path.join(part, resolved)
       if (path.isAbsolute(resolved)) break
