@@ -27,3 +27,45 @@ test('win32 normalize', (t) => {
     t.is(path.win32.normalize(input), expected, input)
   }
 })
+
+test('posix extname', (t) => {
+  for (const [input, expected = ''] of [
+    ['foo'],
+    ['foo.ext', '.ext'],
+    ['foo/bar'],
+    ['foo/bar.ext', '.ext'],
+    ['./foo'],
+    ['./foo.ext', '.ext']
+  ]) {
+    t.is(path.posix.extname(input), expected, input)
+  }
+})
+
+test('posix extname', (t) => {
+  for (const [input, expected = ''] of [
+    ['foo'],
+    ['foo.ext', '.ext'],
+    ['foo/bar'],
+    ['foo/bar.ext', '.ext'],
+    ['./foo'],
+    ['./foo.ext', '.ext']
+  ]) {
+    t.is(path.posix.extname(input), expected, input)
+  }
+})
+
+test('win32 extname', (t) => {
+  for (const [input, expected = ''] of [
+    ['foo'],
+    ['foo.ext', '.ext'],
+    ['foo/bar'],
+    ['foo/bar.ext', '.ext'],
+    ['foo//bar.ext', '.ext'],
+    ['./foo'],
+    ['.\\foo'],
+    ['./foo.ext', '.ext'],
+    ['.\\foo.ext', '.ext']
+  ]) {
+    t.is(path.win32.extname(input), expected, input)
+  }
+})

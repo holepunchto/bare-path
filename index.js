@@ -81,10 +81,21 @@ function makePath (windows) {
     return p.slice(0, start)
   }
 
-  path.extname = function extname (p) {
-    const i = p.lastIndexOf('.')
-    return i === -1 ? '' : p.slice(i)
-  }
+  path.extname = windows
+    ? function extname (p) {
+      const i = p.lastIndexOf('.')
+      if (i === -1) return ''
+      const e = p.slice(i)
+      if (e.includes('/') || e.includes('\\')) return ''
+      return e
+    }
+    : function extname (p) {
+      const i = p.lastIndexOf('.')
+      if (i === -1) return ''
+      const e = p.slice(i)
+      if (e.includes('/')) return ''
+      return e
+    }
 
   path.resolve = function resolve (...args) {
     let resolved = ''
