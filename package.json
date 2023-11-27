@@ -4,7 +4,9 @@
   "description": "Path manipulation library for JavaScript",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "lib",
+    "NOTICE"
   ],
   "scripts": {
     "test": "standard"
@@ -20,7 +22,7 @@
   },
   "homepage": "https://github.com/holepunchto/bare-path#readme",
   "dependencies": {
-    "bare-os": "^2.0.0"
+    "bare-os": "^2.1.0"
   },
   "devDependencies": {
     "brittle": "^3.3.2",
