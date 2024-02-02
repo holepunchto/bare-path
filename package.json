@@ -9,7 +9,7 @@
     "NOTICE"
   ],
   "scripts": {
-    "test": "standard"
+    "test": "standard && bare test.js"
   },
   "repository": {
     "type": "git",
