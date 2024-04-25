@@ -1,6 +1,6 @@
 {
   "name": "bare-path",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Path manipulation library for JavaScript",
   "exports": {
     ".": "./index.js",
