@@ -1,5 +1,11 @@
 /* global Bare */
-const posix = require('./lib/posix')
-const win32 = require('./lib/win32')
 
-module.exports = Bare.platform === 'win32' ? win32 : posix
+// This export SHOULD NOT be shortened in any way as having the full
+// `module.exports = require(...)` statement is crucial for synthesizing
+// ESM exports.
+
+if (Bare.platform === 'win32') {
+  module.exports = require('./lib/win32')
+} else {
+  module.exports = require('./lib/posix')
+}
