@@ -19,9 +19,9 @@ declare namespace path {
   export function resolve(...args: string[]): string
 
   export function toNamespacedPath(path: string): string
-}
 
-export const posix = path
-export const win32 = path
+  export const posix = path
+  export const win32 = path
+}
 
 export = path
