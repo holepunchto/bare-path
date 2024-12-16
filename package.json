@@ -3,18 +3,22 @@
   "version": "3.0.0",
   "description": "Path manipulation library for JavaScript",
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
     "./package": "./package.json",
     "./posix": "./lib/posix.js",
     "./win32": "./lib/win32.js"
   },
   "files": [
     "index.js",
+    "index.d.ts",
     "lib",
     "NOTICE"
   ],
   "scripts": {
-    "test": "standard && bare test.js"
+    "test": "prettier . --check && bare test.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +35,7 @@
   },
   "devDependencies": {
     "brittle": "^3.3.2",
-    "standard": "^17.0.0"
+    "prettier": "^3.4.2",
+    "prettier-config-standard": "^7.0.0"
   }
 }
