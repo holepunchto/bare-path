@@ -1,5 +1,3 @@
-/* global Bare */
-
 // This export SHOULD NOT be shortened in any way as having the full
 // `module.exports = require(...)` statement is crucial for synthesizing
 // ESM exports.
