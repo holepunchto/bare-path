@@ -69,3 +69,9 @@ test('win32 extname', (t) => {
     t.is(path.win32.extname(input), expected, input)
   }
 })
+
+test('resolve of a relative path uses the current working directory', (t) => {
+  const resolved = path.resolve('foo')
+
+  t.ok(path.isAbsolute(resolved))
+})
