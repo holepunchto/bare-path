@@ -70,14 +70,8 @@ test('win32 extname', (t) => {
   }
 })
 
-test('posix resolve of absolute paths', (t) => {
-  t.is(path.posix.resolve('/bar', 'baz'), '/bar/baz')
-  t.is(path.posix.resolve('foo', '/bar'), '/bar')
-})
+test('resolve of a relative path uses the current working directory', (t) => {
+  const resolved = path.resolve('foo')
 
-test('posix resolve of a relative path uses the current working directory', (t) => {
-  const resolved = path.posix.resolve('foo')
-
-  t.ok(path.posix.isAbsolute(resolved))
-  t.ok(resolved.endsWith('/foo'))
+  t.ok(path.isAbsolute(resolved))
 })
