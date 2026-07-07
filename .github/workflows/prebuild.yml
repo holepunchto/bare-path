@@ -1,11 +1,8 @@
-name: Publish
+name: Prebuild
 on:
-  push:
-    tags:
-      - v*
+  workflow_dispatch:
 permissions:
-  id-token: write
-  contents: write
+  contents: read
 jobs:
   prebuild:
     strategy:
@@ -65,13 +62,9 @@ jobs:
           flags: ${{ matrix.flags }}
           tags: ${{ matrix.tags}}
           upload: true
-  publish:
+  merge:
     runs-on: ubuntu-latest
-    environment:
-      name: npm
     needs: prebuild
-    name: Publish
+    name: Merge
     steps:
-      - uses: holepunchto/actions/node-base@v1
-      - uses: holepunchto/actions/download-prebuilds@v1
-      - uses: holepunchto/actions/publish@v1
+      - uses: holepunchto/actions/merge-prebuilds@v1

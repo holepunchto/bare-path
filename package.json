@@ -14,9 +14,14 @@
   "files": [
     "index.js",
     "index.d.ts",
+    "binding.c",
+    "binding.js",
+    "CMakeLists.txt",
     "lib",
+    "prebuilds",
     "NOTICE"
   ],
+  "addon": true,
   "scripts": {
     "format": "prettier --write . && lunte --fix",
     "lint": "prettier --check . && lunte",
@@ -32,11 +37,9 @@
     "url": "https://github.com/holepunchto/bare-path/issues"
   },
   "homepage": "https://github.com/holepunchto/bare-path#readme",
-  "dependencies": {
-    "bare-os": "^3.0.1"
-  },
   "devDependencies": {
     "brittle": "^3.3.2",
+    "cmake-bare": "^1.1.6",
     "lunte": "^1.8.0",
     "prettier": "^3.6.2",
     "prettier-config-holepunch": "^2.0.0"
