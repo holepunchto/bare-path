@@ -354,19 +354,27 @@ test('win32 resolve of absolute paths is deterministic', (t) => {
     [['C:\\foo\\bar', 'D:\\tmp'], 'D:\\tmp'],
     [['\\\\server\\share', 'foo'], '\\\\server\\share\\foo'],
     [['C:\\a\\b', '..\\c'], 'C:\\a\\c'],
-    [['\\'], '\\'],
-    [['\\foo'], '\\foo'],
-    [['C:\\a', '\\b'], 'C:\\b'],
-    [['\\a', '\\b'], '\\b']
+    [['C:\\a', '\\b'], 'C:\\b']
   ]) {
     t.is(path.win32.resolve(...input), expected, JSON.stringify(input))
+  }
+})
+
+test('win32 resolve of a drive-less rooted path adopts the current drive', (t) => {
+  // These paths are rooted but carry no drive, so the resolved drive depends on
+  // the current working directory and is only deterministic in its suffix.
+  for (const input of ['\\', '\\foo', '\\a\\b']) {
+    const resolved = path.win32.resolve(input)
+
+    t.ok(path.win32.isAbsolute(resolved), input)
+    t.ok(resolved.endsWith(input), input)
   }
 })
 
 test('win32 resolve of relative paths uses the current working directory', (t) => {
   const resolved = path.win32.resolve('foo', 'bar')
 
-  t.ok(resolved.charCodeAt(0) === 0x5c, 'is rooted')
+  t.ok(path.win32.isAbsolute(resolved))
   t.ok(resolved.endsWith('\\foo\\bar'))
 })
 
