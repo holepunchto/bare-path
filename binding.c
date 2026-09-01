@@ -22,32 +22,45 @@ bare_path_cwd(js_env_t *env, js_callback_info_t *info) {
   // per-drive current-directory variables can ever be read, never arbitrary
   // environment variables.
   if (argc >= 1) {
-    utf8_t device[8];
-    size_t device_len;
+    js_value_type_t type;
+    err = js_typeof(env, argv[0], &type);
+    assert(err == 0);
 
-    err = js_get_value_string_utf8(env, argv[0], device, sizeof(device), &device_len);
+    if (type != js_string && type != js_undefined && type != js_null) {
+      err = js_throw_type_error(env, NULL, "Device must be a string, null, or undefined");
+      assert(err == 0);
 
-    if (
-      err == 0 &&
-      device_len == 2 &&
-      device[1] == ':' &&
-      ((device[0] >= 'A' && device[0] <= 'Z') || (device[0] >= 'a' && device[0] <= 'z'))
-    ) {
-      char name[4] = {'=', (char) device[0], ':', '\0'};
+      return NULL;
+    }
 
-      char value[4096];
-      size_t value_len = sizeof(value);
+    if (type == js_string) {
+      utf8_t device[8];
+      size_t device_len;
 
-      err = uv_os_getenv(name, value, &value_len);
+      err = js_get_value_string_utf8(env, argv[0], device, sizeof(device), &device_len);
+      assert(err == 0);
 
-      // Fall through to the process working directory when the variable is
-      // unset or otherwise cannot be read.
-      if (err == 0) {
-        js_value_t *result;
-        err = js_create_string_utf8(env, (utf8_t *) value, value_len, &result);
-        assert(err == 0);
+      if (
+        device_len == 2 &&
+        device[1] == ':' &&
+        ((device[0] >= 'A' && device[0] <= 'Z') || (device[0] >= 'a' && device[0] <= 'z'))
+      ) {
+        char name[4] = {'=', (char) device[0], ':', '\0'};
 
-        return result;
+        char value[4096];
+        size_t value_len = sizeof(value);
+
+        err = uv_os_getenv(name, value, &value_len);
+
+        // Fall through to the process working directory when the variable is
+        // unset or otherwise cannot be read.
+        if (err == 0) {
+          js_value_t *result;
+          err = js_create_string_utf8(env, (utf8_t *) value, value_len, &result);
+          assert(err == 0);
+
+          return result;
+        }
       }
     }
   }
