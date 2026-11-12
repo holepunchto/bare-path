@@ -2,6 +2,7 @@
 #include <bare.h>
 #include <js.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include <utf.h>
 #include <uv.h>
 
@@ -47,39 +48,59 @@ bare_path_cwd(js_env_t *env, js_callback_info_t *info) {
       ) {
         char name[4] = {'=', (char) device[0], ':', '\0'};
 
-        char value[4096];
-        size_t value_len = sizeof(value);
+        char buffer[256];
+        char *value = buffer;
+        size_t value_len = sizeof(buffer);
 
         err = uv_os_getenv(name, value, &value_len);
+
+        // The stack buffer only has to fit the common case. A longer value has
+        // its length reported and is read again into a buffer that fits it.
+        if (err == UV_ENOBUFS) {
+          value = malloc(value_len);
+
+          err = uv_os_getenv(name, value, &value_len);
+        }
+
+        js_value_t *result = NULL;
 
         // Fall through to the process working directory when the variable is
         // unset or otherwise cannot be read.
         if (err == 0) {
-          js_value_t *result;
           err = js_create_string_utf8(env, (utf8_t *) value, value_len, &result);
           assert(err == 0);
-
-          return result;
         }
+
+        if (value != buffer) free(value);
+
+        if (result) return result;
       }
     }
   }
 
-  char cwd[4096];
-  size_t cwd_len = sizeof(cwd);
+  char buffer[256];
+  char *cwd = buffer;
+  size_t cwd_len = sizeof(buffer);
 
   err = uv_cwd(cwd, &cwd_len);
+
+  if (err == UV_ENOBUFS) {
+    cwd = malloc(cwd_len);
+
+    err = uv_cwd(cwd, &cwd_len);
+  }
+
+  js_value_t *result = NULL;
 
   if (err < 0) {
     err = js_throw_error(env, uv_err_name(err), uv_strerror(err));
     assert(err == 0);
-
-    return NULL;
+  } else {
+    err = js_create_string_utf8(env, (utf8_t *) cwd, cwd_len, &result);
+    assert(err == 0);
   }
 
-  js_value_t *result;
-  err = js_create_string_utf8(env, (utf8_t *) cwd, cwd_len, &result);
-  assert(err == 0);
+  if (cwd != buffer) free(cwd);
 
   return result;
 }
